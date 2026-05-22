@@ -1,0 +1,8 @@
+name: ExchangeLab
+
+include: 
+  - docker-compose.db.yaml
+
+networks:
+  stock_app_network:
+    driver: bridge

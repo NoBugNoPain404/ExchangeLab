@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+  </head>
+  <body>
+    <h1>STOMP TEST</h1>
+
+    <script>
+      const socket = new WebSocket("ws://localhost:8080/get-data");
+
+      const stompClient = Stomp.over(socket);
+      stompClient.debug = null;
+
+      stompClient.connect({}, () => {
+        stompClient.subscribe("/topic/market-data.BTC", (message) => {
+          const data = JSON.parse(message.body);
+          console.log(`BTC Price: ${data}`);
+        });
+      });
+    </script>
+  </body>
+</html>

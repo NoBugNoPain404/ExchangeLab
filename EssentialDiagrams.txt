@@ -1,0 +1,122 @@
+# Bộ diagram nên có cho project exchange / market data system
+
+## 1. Architecture Diagram ⭐ QUAN TRỌNG NHẤT
+
+Mô tả:
+
+* frontend
+* websocket
+* backend services
+* Redis
+* PostgreSQL
+* matching engine
+* candle aggregation
+
+Mục tiêu:
+
+```text id="mjlwq8"
+cho thấy kiến trúc hệ thống realtime
+```
+
+---
+
+# 2. ERD (Database Diagram)
+
+Mô tả:
+
+* asset
+* trading_pair
+* kline
+* category
+* relations
+
+Mục tiêu:
+
+```text id="ujlwq9"
+cho thấy data modeling và time-series design
+```
+
+---
+
+# 3. Sequence Diagram ⭐ RẤT GIÁ TRỊ
+
+## Nên có:
+
+### A. Place Order Flow
+
+```text id="mjlwra"
+Client
+→ API
+→ Matching Engine
+→ Trade Event
+→ WebSocket
+```
+
+### B. Candle Aggregation Flow
+
+```text id="cjlwrb"
+Trade
+→ Candle Bucket
+→ Redis
+→ DB Flush
+→ Broadcast
+```
+
+Mục tiêu:
+
+```text id="tjlwrc"
+thể hiện realtime/event-driven flow
+```
+
+---
+
+# 4. Component Diagram (Optional nhưng tốt)
+
+Mô tả:
+
+* Matching Engine
+* Market Data Service
+* Cache Layer
+* Persistence Layer
+
+Mục tiêu:
+
+```text id="rjlwrd"
+cho thấy trách nhiệm từng module
+```
+
+---
+
+# 5. Activity Diagram (Optional)
+
+Dùng cho:
+
+* candle update workflow
+* order matching workflow
+
+---
+
+# KHÔNG cần tập trung nhiều vào:
+
+## ❌ UML Class Diagram lớn
+
+Đặc biệt kiểu:
+
+```text id="7jlwre"
+Controller
+Service
+Repository
+DTO
+```
+
+vì project của bạn thiên:
+
+```text id="mjlwrf"
+system design + realtime processing
+```
+
+không phải:
+
+```text id="wjlwrg"
+OOP showcase
+```

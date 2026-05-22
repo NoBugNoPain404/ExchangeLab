@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Market Data</title>
+  </head>
+  <body>
+    <!-- 1. Đặt ID để dễ truy xuất -->
+    <img id="asset-icon" src="placeholder.png" alt="Asset Image" width="100" />
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const iconElement = document.getElementById("asset-icon");
+
+      // 2. Gọi API
+      axios
+        .get("http://localhost:8080/api/v1/market-data/asset/btc")
+        .then((response) => {
+          // axios trả về object đã parse nằm trong response.data
+          const data = response.data;
+          console.log("Data nhận được:", data);
+
+          // 3. Thay đổi thuộc tính src của ảnh sau khi có data
+          if (data && data.iconUrl) {
+            iconElement.src = data.iconUrl;
+          }
+        })
+        .catch((error) => {
+          console.error("Lỗi rồi ông giáo ạ:", error);
+        });
+    </script>
+  </body>
+</html>
