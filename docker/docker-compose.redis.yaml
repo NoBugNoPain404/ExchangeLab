@@ -1,7 +1,7 @@
 services:
   redis:
     container_name: redis_cache
-    image: redis:8-alpine
+    image: redis:7.2-alpine
 
     command: >
       redis-server
@@ -20,7 +20,7 @@ services:
       - redis_data:/data
 
     networks:
-      - stock_app_network
+      - exchange_lab_network
 
     restart: unless-stopped
 

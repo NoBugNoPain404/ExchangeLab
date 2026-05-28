@@ -13,4 +13,5 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation(project(":common:common-jpa"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 }

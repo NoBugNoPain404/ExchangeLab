@@ -2,7 +2,7 @@ name: ExchangeLab
 
 include: 
   - docker-compose.db.yaml
-
+  - docker-compose.redis.yaml
 networks:
-  stock_app_network:
+  exchange_lab_network:
     driver: bridge

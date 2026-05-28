@@ -56,8 +56,7 @@ create table market_data.spot_trading_pair(
     check (base_asset_id <> quote_asset_id)
 );
 
-create table market_data.trading_pair_kline(
-    interval varchar(10) not null,
+create table market_data.trading_pair_kline_1m(
     trading_pair_id int not null references market_data.spot_trading_pair(id),
     start_time timestamptz not null,
     open decimal(38,18) not null,
@@ -71,5 +70,5 @@ create table market_data.trading_pair_kline(
     trade_count bigint not null,
     taker_buy_volume decimal(38,18) not null,
     taker_buy_quote_volume decimal(38,18) not null,
-    primary key (interval, trading_pair_id, start_time)
+    primary key (trading_pair_id, start_time)
 );

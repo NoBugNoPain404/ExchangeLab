@@ -38,6 +38,7 @@ subprojects {
         add("annotationProcessor","org.mapstruct:mapstruct-processor:1.6.3")
         add("annotationProcessor","org.projectlombok:lombok-mapstruct-binding:0.2.0")
         add("testImplementation", "org.junit.jupiter:junit-jupiter:5.13.0")
+        add("implementation", "org.springframework.boot:spring-boot-starter-data-redis:3.5.0")
     }
 
     tasks.withType<Test> {

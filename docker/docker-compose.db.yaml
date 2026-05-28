@@ -14,13 +14,13 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
 
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
     volumes:
       - db_data:/var/lib/postgresql/data
 
     networks:
-      - stock_app_network
+      - exchange_lab_network
 
     healthcheck:
       test:
