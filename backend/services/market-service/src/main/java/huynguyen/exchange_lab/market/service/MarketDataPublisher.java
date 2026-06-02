@@ -1,7 +1,6 @@
 package huynguyen.exchange_lab.market.service;
 
 import huynguyen.exchange_lab.market.common.KlineCache;
-import huynguyen.exchange_lab.market.common.KlineData;
 import huynguyen.exchange_lab.market.common.PriceEngine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -25,7 +24,6 @@ public class MarketDataPublisher {
     public void publish() {
         Map<String, BigDecimal> newPrices = priceEngine.tick();
         newPrices.forEach((symbol, price) -> {
-            Instant thisTime = Instant.now();
             price = price.setScale(4, RoundingMode.HALF_UP);
             template.convertAndSend("/topic/market-data." + symbol, price);
         });

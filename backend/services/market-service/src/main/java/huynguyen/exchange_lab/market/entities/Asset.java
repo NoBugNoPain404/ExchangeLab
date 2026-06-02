@@ -20,7 +20,15 @@ import java.time.Instant;
 public class Asset extends BaseEntity {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "asset_generator"
+    )
+    @SequenceGenerator(
+            name = "asset_generator",
+            sequenceName = "market_data.asset_id_seq",
+            allocationSize = 1
+    )
     private Integer id;
 
     @Column(name = "name", nullable = false)
