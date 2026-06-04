@@ -12,7 +12,4 @@ public class MarketConfig {
     public PriceEngine priceEngine() {
         return new PriceEngine();
     }
-
-    @Bean
-    public KlineCache klineCache() { return new KlineCache(); }
 }
