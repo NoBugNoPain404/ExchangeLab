@@ -1,12 +1,11 @@
 package huynguyen.exchange_lab.market.service;
 
 import huynguyen.exchange_lab.market.common.KlineCache;
-import huynguyen.exchange_lab.market.common.KlineData;
+import huynguyen.exchange_lab.market.components.*;
+import huynguyen.exchange_lab.market.entities.KlineData;
 import huynguyen.exchange_lab.market.common.PriceEngine;
-import huynguyen.exchange_lab.market.components.PairPriceCache;
-import huynguyen.exchange_lab.market.components.PairPriceCalc;
-import huynguyen.exchange_lab.market.components.PriceCache;
 import huynguyen.exchange_lab.market.enums.KlineIntervalEnum;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,7 +24,25 @@ public class MarketDataPublisher {
     private final PairPriceCalc pairPriceCalc;
     private final PairPriceCache pairPriceCache;
 
+    private final KlineBuffer klineBuffer;
+
     private final KlineCache klineCache;
+    private final MarketRegistry marketRegistry;
+
+    @PostConstruct
+    public void init() {
+        priceCache.update(priceEngine.getAllPrices());
+        pairPriceCalc.calcSymbolPrice();
+        pairPriceCache.getAll().forEach(
+                (key, value) -> {
+                    for (KlineIntervalEnum intervalEnum : KlineIntervalEnum.values()) {
+                        KlineData klineData = new KlineData(marketRegistry.get(key).getId());
+                        klineData.setAll(value);
+                        klineCache.put(key, intervalEnum.getMillis(), klineData);
+                    }
+                }
+        );
+    }
 
     @Scheduled(fixedRate = 1000,
     initialDelay = 5000)
@@ -47,9 +64,11 @@ public class MarketDataPublisher {
                                         .toEpochMilli() / intervalEnum.getMillis();
 
                         if (currentBucket != cachedBucket) {
-                            KlineData klineData = new KlineData();
+                            KlineData klineData = new KlineData(kline.getTradingPairId());
                             klineData.setAll(kline.getClose());
                             klineCache.put(key, intervalEnum.getMillis(), klineData);
+
+                            klineBuffer.putIntoBuffer(intervalEnum.getCode(), kline);
                         }
                         klineCache.update(key, intervalEnum.getMillis(), value);
                     }

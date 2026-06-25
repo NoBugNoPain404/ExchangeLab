@@ -39,6 +39,8 @@ subprojects {
         add("annotationProcessor","org.projectlombok:lombok-mapstruct-binding:0.2.0")
         add("testImplementation", "org.junit.jupiter:junit-jupiter:5.13.0")
         add("implementation", "org.springframework.boot:spring-boot-starter-data-redis:3.5.0")
+        add("implementation", "com.fasterxml.jackson.core:jackson-annotations:2.17.1")
+        add("implementation", "org.springframework.boot:spring-boot-starter-jdbc:3.5.0")
     }
 
     tasks.withType<Test> {

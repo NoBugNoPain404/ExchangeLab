@@ -9,6 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PairInfo {
 
+    private Integer id;
+
     private String base;
 
     private String quote;

@@ -3,6 +3,7 @@ package huynguyen.exchange_lab.market.config;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import huynguyen.exchange_lab.market.common.KlineCache;
 import huynguyen.exchange_lab.market.common.PriceEngine;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

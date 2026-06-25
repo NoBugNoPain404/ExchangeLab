@@ -1,14 +1,19 @@
 package huynguyen.exchange_lab.market.service;
 
+import huynguyen.common.common_jpa.dto.ApiResponse;
 import huynguyen.exchange_lab.market.common.KlineCache;
 import huynguyen.exchange_lab.market.common.PairInfo;
-import huynguyen.exchange_lab.market.common.SymbolProjection;
+import huynguyen.exchange_lab.market.projections.SymbolNameProjection;
+import huynguyen.exchange_lab.market.projections.SymbolProjection;
 import huynguyen.exchange_lab.market.components.MarketRegistry;
+import huynguyen.exchange_lab.market.enums.TradingPairStatusEnum;
 import huynguyen.exchange_lab.market.repository.TradingPairRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,6 +36,7 @@ public class TradingPairService {
                         SymbolProjection::getSymbol,
                         projection ->
                             new PairInfo(
+                                    projection.getId(),
                                     projection.getBaseAsset().getTicker(),
                                     projection.getQuoteAsset().getTicker()
                             )
@@ -38,5 +44,14 @@ public class TradingPairService {
         marketRegistry.putAll(cachedData);
 
         klineCache.init();
+    }
+
+    @Cacheable(value = "trading_pairs", key = "'listed'")
+    public ApiResponse<List<SymbolNameProjection>> getListedTradingPairs() {
+        List<SymbolNameProjection> tradingPairs = tradingPairRepository.getAllByStatus(TradingPairStatusEnum.LISTED);
+        return ApiResponse.<List<SymbolNameProjection>>builder()
+                .code(201)
+                .data(tradingPairs)
+                .build();
     }
 }
