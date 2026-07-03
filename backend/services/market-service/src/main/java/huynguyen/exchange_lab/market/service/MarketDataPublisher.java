@@ -60,11 +60,11 @@ public class MarketDataPublisher {
                                 thisInstant.toEpochMilli() / intervalEnum.getMillis();
 
                         long cachedBucket =
-                                kline.getOpenTime()
+                                kline.getId().getStartTime()
                                         .toEpochMilli() / intervalEnum.getMillis();
 
                         if (currentBucket != cachedBucket) {
-                            KlineData klineData = new KlineData(kline.getTradingPairId());
+                            KlineData klineData = new KlineData(kline.getId().getTradingPairId());
                             klineData.setAll(kline.getClose());
                             klineCache.put(key, intervalEnum.getMillis(), klineData);
 

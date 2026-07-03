@@ -1,5 +1,7 @@
 package huynguyen.exchange_lab.market.entities;
 
+import huynguyen.exchange_lab.market.common.KlineId;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,8 +15,9 @@ import java.time.Instant;
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class KlineData{
-    private Integer tradingPairId;
-    private Instant openTime;
+    @EmbeddedId
+    private KlineId id;
+
     private BigDecimal low;
     private BigDecimal high;
     private BigDecimal open;
@@ -28,8 +31,9 @@ public class KlineData{
     private BigDecimal takerBuyQuoteVolume;
 
     public KlineData(Integer id) {
-        this.tradingPairId = id;
-        this.openTime = Instant.now();
+        this.id = new KlineId();
+        this.id.setTradingPairId(id);
+        this.id.setStartTime(Instant.now());
 
         this.low = BigDecimal.ZERO;
         this.high = BigDecimal.ZERO;

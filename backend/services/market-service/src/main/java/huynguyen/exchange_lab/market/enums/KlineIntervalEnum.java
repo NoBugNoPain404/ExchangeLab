@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum KlineIntervalEnum {
-    ONE_MINUTES("1m", 60000L),
-    FIVE_MINUTES("5m", 300000L);
+    m1("1m", 60000L),
+    m5("5m", 300000L);
 
     private final long millis;
     private final String code;

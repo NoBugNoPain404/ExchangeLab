@@ -15,4 +15,6 @@ public interface TradingPairRepository extends JpaRepository<TradingPair, Intege
     List<SymbolNameProjection> getAllByStatus(TradingPairStatusEnum status);
 
     List<SymbolProjection> getAllBy();
+
+    TradingPair findBySymbol(String symbol);
 }

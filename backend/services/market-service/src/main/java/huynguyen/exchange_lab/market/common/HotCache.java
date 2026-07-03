@@ -15,7 +15,7 @@ public class HotCache {
 
     public void updateHotCache(String symbol, Long interval, KlineData data) {
         redisTemplate.opsForZSet()
-                .add(String.format("%s:%d", symbol, interval), data, Double.parseDouble(data.getOpenTime().toString()));
+                .add(String.format("%s:%d", symbol, interval), data, Double.parseDouble(data.getId().getStartTime().toString()));
 
         redisTemplate.opsForZSet()
                 .removeRange(String.format("%s:%d", symbol, interval), 0, -(MAX_SIZE + 1));

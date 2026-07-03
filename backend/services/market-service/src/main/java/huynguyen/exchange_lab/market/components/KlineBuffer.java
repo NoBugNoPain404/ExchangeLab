@@ -61,8 +61,8 @@ public class KlineBuffer {
                         batch,
                         1000,
                         (ps, kline) -> {
-                            ps.setInt(1, kline.getTradingPairId());
-                            ps.setTimestamp(2, Timestamp.from(kline.getOpenTime()));
+                            ps.setInt(1, kline.getId().getTradingPairId());
+                            ps.setTimestamp(2, Timestamp.from(kline.getId().getStartTime()));
                             ps.setBigDecimal(3, kline.getOpen());
                             ps.setBigDecimal(4, kline.getClose());
                             ps.setBigDecimal(5, kline.getLow());

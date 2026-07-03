@@ -1,4 +1,4 @@
-package huynguyen.common.common_jpa.config;
+package huynguyen.exchange_lab.market.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
